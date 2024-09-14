@@ -16,3 +16,12 @@ The web application is just going to be a bit of fun. It will be rock, paper, sc
 - You will be able to friend people, and start games specifically with them. The friend list will be stored in the database.
 - The ability to select rock, paper, or scissors and confirm that they are ready.
 
+## Technologies
+
+- **HTML:** It will be used to structure the spot where you'll login as well as the structure of the game.
+- **CSS:** It will be used to make everything look nice.
+- **Javascript:** Allows the webpage to be interacted with so that you can choose your items that you will put up against your opponent.
+- **React:** Basically will help do what javascript does, but in a more organized way.
+- **Service:** It is what handles the logic. It will store stuff in the database, handle login, and handle the game.
+- **Database/Login:** It will have the usernames, plus their login information and friend lists.
+- **Websocket:** This will be used so that the game can be played in the first place. The clients will tell the server their choices, and it will tell them what their opponent chose.
