@@ -13,4 +13,4 @@ Alright, so I've learned about HTML today, and it doesn't seem too bad. Importan
 ## URL Website Name
 
 - The url is rpsshowdown.click.
-- <a href="https:rpsshowdown.click">Rock Paper Scissors Showdown</a>
+- <a href="https://rpsshowdown.click">Rock Paper Scissors Showdown</a>
