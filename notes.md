@@ -14,3 +14,7 @@ Alright, so I've learned about HTML today, and it doesn't seem too bad. Importan
 
 - The url is rpsshowdown.click.
 - <a href="https://rpsshowdown.click">Rock Paper Scissors Showdown</a>
+
+## Simon
+
+- I got Simon up and running on my server. I've looked at it a bit, and now I'm going to work on creating the pages for my startup.
