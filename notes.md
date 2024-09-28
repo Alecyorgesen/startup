@@ -18,3 +18,9 @@ Alright, so I've learned about HTML today, and it doesn't seem too bad. Importan
 ## Simon
 
 - I got Simon up and running on my server. I've looked at it a bit, and now I'm going to work on creating the pages for my startup.
+
+## CSS
+
+- To be perfectly clear, I think that css using dashes instead of underscores is silly.
+- Anyway, I learned a lot about things like putting the element you want to effect first, opening up with braces, using background-color: (hex number) to change the color of things, and yeah.
+- There are so many things to learn, and there is no way I'm going to memorize them all, but that's what A.I. is for these days huh.
