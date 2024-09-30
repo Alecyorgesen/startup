@@ -25,3 +25,11 @@ The web application is just going to be a bit of fun. It will be rock, paper, sc
 - **Service:** It is what handles the logic. It will store stuff in the database, handle login, and handle the game.
 - **Database/Login:** It will have the usernames, plus their login information and friend lists.
 - **Websocket:** This will be used so that the game can be played in the first place. The clients will tell the server their choices, and it will tell them what their opponent chose.
+
+## HTML
+
+- There are currently 4 html files included.
+- index.html: This is the login page.
+- play.html: This is where you will actually be able to play the game. Right now it just has buttons. I'll probably switch it out for drop down menus.
+- scores.html: This is here to see who has the most wins. Eventually it will pull information from a database.
+- about.html: This is here so that you can learn more about the game.
