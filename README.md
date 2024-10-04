@@ -34,3 +34,4 @@ The web application is just going to be a bit of fun. It will be rock, paper, sc
 - [x] scores.html: This is here to see who has the most wins. Eventually it will pull information from a database.
 - [x] about.html: This is here so that you can learn more about the game.
 - [ ] I want to replace the buttons with dropdown menus, but I'll have to do that later with Bootstrap.
+- [x] Added placeholder image from another website. The idea is it's from database that's not mine.
