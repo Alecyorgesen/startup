@@ -35,3 +35,9 @@ The web application is just going to be a bit of fun. It will be rock, paper, sc
 - [x] about.html: This is here so that you can learn more about the game.
 - [ ] I want to replace the buttons with dropdown menus, but I'll have to do that later with Bootstrap.
 - [x] Added placeholder image from another website. The idea is it's from database that's not mine.
+
+## CSS
+- [ ] Login page
+- [ ] Play page
+- [ ] Scores page
+- [ ] About page
