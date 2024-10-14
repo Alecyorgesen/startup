@@ -24,3 +24,7 @@ Alright, so I've learned about HTML today, and it doesn't seem too bad. Importan
 - To be perfectly clear, I think that css using dashes instead of underscores is silly.
 - Anyway, I learned a lot about things like putting the element you want to effect first, opening up with braces, using background-color: (hex number) to change the color of things, and yeah.
 - There are so many things to learn, and there is no way I'm going to memorize them all, but that's what A.I. is for these days huh.
+
+## Bootstrap
+
+- This kind of does the CSS for you in a way. It's really nice, and it means things become a lot simpler.
