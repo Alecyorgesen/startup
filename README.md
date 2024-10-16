@@ -37,7 +37,7 @@ The web application is just going to be a bit of fun. It will be rock, paper, sc
 - [x] Added placeholder image from another website. The idea is it's from database that's not mine.
 
 ## CSS
-- [ ] Login page
-- [ ] Play page
-- [ ] Scores page
-- [ ] About page
+- [x] Login page: It's pretty good! Nothing too extravagant here.
+- [ ] Play page: There are still things that I think that I should change, and I know that there are things that I should add, but I'll get to those things later as I actually make the game functional.
+- [x] Scores page: I'm just using the default bootstrap table here. Nothing crazy going on.
+- [x] About page: I managed to get things centered. I'll later make it so that random pictures show up from some other website I think.
