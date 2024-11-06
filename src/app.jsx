@@ -22,16 +22,16 @@ export default function App() {
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
                         <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="index.html">Login</a>
+                            <NavLink className="nav-link active" aria-current="page" to="">Login</NavLink>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="play.html">Play</a>
+                            <NavLink className="nav-link" to="play">Play</NavLink>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="scores.html">Scores</a>
+                            <NavLink className="nav-link" to="scores">Scores</NavLink>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="about.html">About the game</a>
+                            <NavLink className="nav-link" to="about">About the game</NavLink>
                         </li>
                         </ul>
                     </div>
@@ -43,10 +43,16 @@ export default function App() {
             </header>
 
             <Routes>
-                <Route>
-
-                </Route>
+                <Route path='/' element={<Login />} />
+                <Route path='/play' element={<Play />} />
+                <Route path='/scores' element={<Scores />} />
+                <Route path='/about' element={<About />} />
+                <Route path='*' element={<NotFound />} />
             </Routes>
         </BrowserRouter>
     )
 }
+
+function NotFound() {
+    return <main className='container-fluid bg-secondary text-center'>404: Return to sender. Address unknown.</main>;
+  }
