@@ -1,0 +1,7 @@
+.background-grey {
+    background-color: hsl(0, 0%, 53%);
+  }
+
+html, .body {
+    background-color: #e6e6e6;
+}

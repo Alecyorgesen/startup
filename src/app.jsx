@@ -6,12 +6,14 @@ import Scores from './scores/scores';
 import About from './about/about';
 // import { AuthState } from './login/AuthState';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'; //I might change this later...
 import './app.css';
 
 export default function App() {
 
     return (
         <BrowserRouter>
+        <div className='body'>
             <header className="sticky-top">
                 <nav className="navbar navbar-expand-lg bg-grey">
                     <div className="container-fluid">
@@ -49,7 +51,23 @@ export default function App() {
                 <Route path='/about' element={<About />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
+
+
+            <footer className="d-flex background-grey position-absolute bottom-0 end-0">
+            <div className="container-fluid">
+              <div className="row">
+                  <div className="col d-flex justify-content-center">
+                      <p>Alec Yorgesen</p>
+                  </div>
+                  <div className="col d-flex justify-content-center fw-bold">
+                      <a href="https://github.com/Alecyorgesen/startup">Github Link</a>
+                  </div>
+              </div>
+            </div>
+        </footer>
+        </div>
         </BrowserRouter>
+        
     )
 }
 

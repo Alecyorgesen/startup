@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Login() {
     return (
-    <main>
+    <main className="pt-5 flex-fill">
         <h1 className="d-flex justify-content-center">
             Welcome to Rock Paper Scissors Showdown!
         </h1>
