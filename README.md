@@ -41,3 +41,8 @@ The web application is just going to be a bit of fun. It will be rock, paper, sc
 - [ ] Play page: There are still things that I think that I should change, and I know that there are things that I should add, but I'll get to those things later as I actually make the game functional.
 - [x] Scores page: I'm just using the default bootstrap table here. Nothing crazy going on.
 - [x] About page: I managed to get things centered. I'll later make it so that random pictures show up from some other website I think.
+
+## React
+- [ ] Convert everything to react!
+- [ ] Make a mock version of the login and create new account functionality!
+- [ ] Make a mock version of the game!!!! Play against a bot maybe?
