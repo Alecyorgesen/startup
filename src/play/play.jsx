@@ -1,33 +1,34 @@
 import React from "react";
+import Button from "react-bootstrap/Button";
 import "./play.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js"; //I might change this later...
 
 export default function Play({
-  gameInProgess,
+  gameInProgress,
   setGameInProgress,
   pngList,
   setPngList,
 }) {
   let alt = "gray_squre";
-  if (gameInProgess) {
-    console.log("hey there sir!!!");
-  }
   return (
     <main>
-      {gameInProgess === false && (
+      {gameInProgress === false && (
         <nav className="d-flex justify-content-center">
-          <button
+          <Button
+            type="submit"
             className="btn btn-primary m-2 button"
-            onClick={() => startGame()}
+            onClick={() => setGameInProgress(true)}
           >
             Find random match
-          </button>
-          <button
+          </Button>
+          <Button
+            type="submit"
             className="btn btn-primary m-2 button"
-            onClick={() => startGame()}
+            onClick={() => setGameInProgress(true)}
           >
             Play against a friend
-          </button>
+          </Button>
         </nav>
       )}
 
@@ -40,7 +41,7 @@ export default function Play({
       </div>
 
       <div className="row pt-5">
-        {gameInProgess === true && (
+        {gameInProgress === true && (
           <>
             <Dropdown number={0} />
             <Dropdown number={1} />
@@ -60,7 +61,8 @@ export default function Play({
       </div>
     </main>
   );
-  function startGame() {
+
+  async function startGame() {
     setGameInProgress(true);
   }
 
