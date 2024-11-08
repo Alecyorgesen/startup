@@ -12,6 +12,12 @@ import './app.css';
 export default function App() {
     const [username, setUsername] = useState('');
     const [authenticated, setAuthenticated] = useState(false);
+    const [gameInProgress, setGameInProgress] = useState(false);
+    let list = []
+    for (let i = 0; i < 10; i++) {
+      list.push("gray_square.png")
+    }
+    const [pngList, setPngList] = useState(list)
 
     return (
         <BrowserRouter>
@@ -51,9 +57,18 @@ export default function App() {
             </header>
 
             <Routes>
-                <Route path='/' element={<Login username={username} setUsername={setUsername}
-                authenticated={authenticated} setAuthenticated={setAuthenticated} />} />
-                <Route path='/play' element={<Play />} />
+                <Route path='/' element={<Login
+                username={username}
+                setUsername={setUsername}
+                authenticated={authenticated}
+                setAuthenticated={setAuthenticated}
+                />} />
+                <Route path='/play' element={<Play 
+                gameInProgress={gameInProgress}
+                setGameInProgress={setGameInProgress}
+                pngList={pngList}
+                setPngList={setPngList}
+                />} />
                 <Route path='/scores' element={<Scores />} />
                 <Route path='/about' element={<About />} />
                 <Route path='*' element={<NotFound />} />

@@ -1,16 +1,9 @@
 import React from "react";
 import './play.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from "react";
 
 
-export default function Play() {
-  let list = []
-  for (let i = 0; i < 10; i++) {
-    list.push("gray_square.png")
-  }
-  const [pngList, setPngList] = useState(list)
-
+export default function Play({ gameInProgess, setGameInProgress, pngList, setPngList }) {
     let alt = "gray_squre";
     return (
     <main>
@@ -27,11 +20,15 @@ export default function Play() {
         </div>
 
         <div className="row pt-5">
-          <Dropdown number={0} pngList={pngList} setPngList={setPngList} />
-          <Dropdown number={1} pngList={pngList} setPngList={setPngList} />
-          <Dropdown number={2} pngList={pngList} setPngList={setPngList} />
-          <Dropdown number={3} pngList={pngList} setPngList={setPngList} />
-          <Dropdown number={4} pngList={pngList} setPngList={setPngList} />
+          {gameInProgess === true && (
+            <>
+              <Dropdown number={0} />
+              <Dropdown number={1} />
+              <Dropdown number={2} />
+              <Dropdown number={3} />
+              <Dropdown number={4} />
+            </>
+          )}
         </div>
 
         <div className="row pb-5">
@@ -43,33 +40,33 @@ export default function Play() {
         </div>
     </main>
     )
-}
 
-function Image({ png, alt }) {
-  return (
-  <div className="col d-flex justify-content-center">
-    <img src={png} alt={alt} width="100px" />
-  </div>
-  )
-}
-
-function Dropdown({ number, pngList, setPngList }) {
-  return (
-    <div className="dropdown col d-flex justify-content-center">
-      <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Select
-      </button>
-      <ul className="dropdown-menu">
-        <li><button className="dropdown-item" type="button" onClick={() => setElementInPngList(number, 'rock.png', pngList, setPngList)}>Rock</button></li>
-        <li><button className="dropdown-item" type="button" onClick={() => setElementInPngList(number, 'paper.png', pngList, setPngList)}>Paper</button></li>
-        <li><button className="dropdown-item" type="button" onClick={() => setElementInPngList(number, 'scissors.png', pngList, setPngList)}>Scissors</button></li>
-      </ul>
-    </div>
-  )
-}
-
-function setElementInPngList(i, type, pngList, setPngList) {
-  let newList = [...pngList];
-  newList[i] = type;
-  setPngList(newList);
+    function Image({ png, alt }) {
+      return (
+      <div className="col d-flex justify-content-center">
+        <img src={png} alt={alt} width="100px" />
+      </div>
+      )
+    }
+    
+    function Dropdown({ number }) {
+      return (
+        <div className="dropdown col d-flex justify-content-center">
+          <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Select
+          </button>
+          <ul className="dropdown-menu">
+            <li><button className="dropdown-item" type="button" onClick={() => setElementInPngList(number, 'rock.png')}>Rock</button></li>
+            <li><button className="dropdown-item" type="button" onClick={() => setElementInPngList(number, 'paper.png')}>Paper</button></li>
+            <li><button className="dropdown-item" type="button" onClick={() => setElementInPngList(number, 'scissors.png')}>Scissors</button></li>
+          </ul>
+        </div>
+      )
+    }
+    
+    function setElementInPngList(i, type) {
+      let newList = [...pngList];
+      newList[i] = type;
+      setPngList(newList);
+    }
 }
