@@ -11,7 +11,6 @@ export default function Play() {
   }
   const [pngList, setPngList] = useState(list)
 
-    let png = "gray_square.png";
     let alt = "gray_squre";
     return (
     <main>
