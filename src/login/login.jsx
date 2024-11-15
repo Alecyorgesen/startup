@@ -131,8 +131,6 @@ export default function Login({
                     setErrorText(response.msg)
                 }
             })
-        setUsername(inputUsername);
-        setAuthenticated(true);
     }
 
     async function logout() {
