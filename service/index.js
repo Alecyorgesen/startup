@@ -30,7 +30,7 @@ apiRouter.post("/auth/create", async (req, res) => {
   }
 });
 
-apiRouter.post("/api/login", async (req, res) => {
+apiRouter.post("/auth/login", async (req, res) => {
   const user = users[req.body.email];
   if (user) {
     if (req.body.password === user.password) {
@@ -43,6 +43,36 @@ apiRouter.post("/api/login", async (req, res) => {
   }
 });
 
-apiRouter.delete('/api/logout', async (req, res) => {
-    
-})
+apiRouter.delete("/auth/logout", async (req, res) => {
+  const user = Object.values(users).find(
+    (user) => user.token === req.body.token
+  );
+  if (user) {
+    delete user.token;
+  }
+  res.status(204).end();
+});
+
+apiRouter.get("/scores", async (req, res) => {
+  res.send(scores);
+});
+
+apiRouter.post("/score", async (req, res) => {
+  const score = req.body.score;
+  const user = Object.values(users).find(
+    (user) => user.token === req.body.token
+  );
+  const prevScore = scores.find((score) => score.email === user.email);
+  if (score.score > prevScore.score) {
+    i = 0;
+    for (score of scores) {
+      if (score.email === prevScore.email) {
+        break;
+      }
+      i += 1;
+    }
+    scores[i] = score;
+  }
+  scores.push(req.body.scores);
+  scores.sort((item1, item2) => (item1 > item2 ? item1 : item2));
+});
