@@ -73,6 +73,22 @@ apiRouter.post("/score", async (req, res) => {
     }
     scores[i] = score;
   }
-  scores.push(req.body.scores);
   scores.sort((item1, item2) => (item1 > item2 ? item1 : item2));
+  if (scores.length >= 20) {
+    res.send(scores.slice(0, 20));
+    return;
+  }
+  res.send(scores);
+});
+
+apiRouter.get("/hey", async (req, res) => {
+  res.send({ message: "Hey There!!!!!!!!" });
+});
+
+app.use((_req, res) => {
+  res.sendFile("index.html", { root: "public" });
+});
+
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });
