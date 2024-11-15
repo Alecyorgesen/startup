@@ -46,3 +46,8 @@ The web application is just going to be a bit of fun. It will be rock, paper, sc
 - [x] Convert everything to react!
 - [x] Make a mock version of the login and create new account functionality!
 - [ ] Make a mock version of the game!!!! Play against a bot maybe? I partially did this. You can't play yet, but you can select the different options that are available.
+
+## Services
+- [ ] Create end points
+- [ ] Use the end poins
+- [ ] Make a call to a different website
