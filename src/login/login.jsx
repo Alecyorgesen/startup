@@ -13,12 +13,14 @@ export default function Login({
 }) {
     const [inputUsername, setInputUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const [errorText, setErrorText] = React.useState("");
 
     return (
         <main className="pt-5 flex-fill">
             <h1 className="d-flex justify-content-center">
                 Welcome to Rock Paper Scissors Showdown!
             </h1>
+            <p className="d-flex justify-content-center text-danger">{errorText}</p>
             {authenticated === false && (
                 <>
                     <h2 className="d-flex justify-content-center">Please log in:</h2>
@@ -77,14 +79,28 @@ export default function Login({
         </main>
     );
     async function createUser() {
-        fetch('api/auth/create')
+        if (inputUsername === '') {
+            setErrorText("Username is empty.")
+            return
+        }
+        if (password === '') {
+            setErrorText("Password is empty.")
+            return
+        }
+        await fetch('api/auth/create', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ name: inputUsername, password: password }),
+        })
             .then((response) => response.json())
             .then((response) => {
                 if (response.token) {
                     setToken(response.token)
                     setUsername(inputUsername);
                     setAuthenticated(true);
+                    setErrorText('');
                 } else if (response.msg) {
+                    setErrorText("Couldn't create user.");
                     console.log(response.msg);
                 }
             })

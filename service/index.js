@@ -15,23 +15,23 @@ var apiRouter = express.Router();
 app.use("/api", apiRouter);
 
 apiRouter.post("/auth/create", async (req, res) => {
-  const user = users[req.body.email];
+  const user = users[req.body.name];
   if (user) {
-    res.status(send({ msg: "User already exists" }));
+    res.status(409).send({ msg: "User already exists" });
   } else {
     const user = {
-      email: req.body.email,
+      name: req.body.name,
       password: req.body.password,
       token: uuid.v4(),
     };
-    users[user.email] = user;
+    users[user.name] = user;
 
     res.send({ token: user.token });
   }
 });
 
 apiRouter.post("/auth/login", async (req, res) => {
-  const user = users[req.body.email];
+  const user = users[req.body.name];
   if (user) {
     if (req.body.password === user.password) {
       user.token = uuid.v4();
@@ -62,11 +62,11 @@ apiRouter.post("/score", async (req, res) => {
   const user = Object.values(users).find(
     (user) => user.token === req.body.token
   );
-  const prevScore = scores.find((score) => score.email === user.email);
+  const prevScore = scores.find((score) => score.name === user.name);
   if (score.score > prevScore.score) {
     i = 0;
     for (score of scores) {
-      if (score.email === prevScore.email) {
+      if (score.name === prevScore.name) {
         break;
       }
       i += 1;
