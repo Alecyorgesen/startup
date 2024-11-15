@@ -2,6 +2,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import "./login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { response } from "express";
 
 export default function Login({
     username,
@@ -100,13 +101,36 @@ export default function Login({
                     setAuthenticated(true);
                     setErrorText('');
                 } else if (response.msg) {
-                    setErrorText("Couldn't create user.");
-                    console.log(response.msg);
+                    setErrorText(response.msg);
                 }
             })
     }
 
     async function login() {
+        if (inputUsername === '') {
+            setErrorText("Username is empty.")
+            return
+        }
+        if (password === '') {
+            setErrorText("Password is empty.")
+            return
+        }
+        await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ name: inputUsername, password: password }),
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                if (response.token) {
+                    setToken(response.token);
+                    setUsername(inputUsername);
+                    setAuthenticated(true);
+                    setErrorText('');
+                } else if (response.msg) {
+                    setErrorText(response.msg)
+                }
+            })
         setUsername(inputUsername);
         setAuthenticated(true);
     }

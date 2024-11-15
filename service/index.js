@@ -35,6 +35,8 @@ apiRouter.post("/auth/login", async (req, res) => {
   if (user) {
     if (req.body.password === user.password) {
       user.token = uuid.v4();
+      users[user.name] = user;
+      
       res.send({ token: user.token });
       return;
     }
