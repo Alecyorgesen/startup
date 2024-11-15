@@ -8,6 +8,8 @@ export default function Login({
     setUsername,
     authenticated,
     setAuthenticated,
+    token,
+    setToken
 }) {
     const [inputUsername, setInputUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -75,8 +77,17 @@ export default function Login({
         </main>
     );
     async function createUser() {
-        setUsername(inputUsername);
-        setAuthenticated(true);
+        fetch('api/auth/create')
+            .then((response) => response.json())
+            .then((response) => {
+                if (response.token) {
+                    setToken(response.token)
+                    setUsername(inputUsername);
+                    setAuthenticated(true);
+                } else if (response.msg) {
+                    console.log(response.msg);
+                }
+            })
     }
 
     async function login() {

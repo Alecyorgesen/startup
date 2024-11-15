@@ -19,6 +19,8 @@ export default function App() {
   const [username, setUsername] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
   const [gameInProgress, setGameInProgress] = useState(false);
+  const [token, setToken] = useState('');
+
   let list = [];
   for (let i = 0; i < 10; i++) {
     list.push("gray_square.png");
@@ -91,6 +93,8 @@ export default function App() {
                 setUsername={setUsername}
                 authenticated={authenticated}
                 setAuthenticated={setAuthenticated}
+                token={token}
+                setToken={setToken}
               />
             }
           />
