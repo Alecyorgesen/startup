@@ -2,7 +2,6 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import "./login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { response } from "express";
 
 export default function Login({
     username,
