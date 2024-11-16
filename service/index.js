@@ -36,13 +36,12 @@ apiRouter.post("/auth/login", async (req, res) => {
     if (req.body.password === user.password) {
       user.token = uuid.v4();
       users[user.name] = user;
-      
+
       res.send({ token: user.token });
       return;
     }
-  } else {
-    res.status(401).send({ msg: "Unauthorized" });
   }
+  res.status(401).send({ msg: "Unauthorized" });
 });
 
 apiRouter.delete("/auth/logout", async (req, res) => {
