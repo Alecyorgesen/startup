@@ -133,6 +133,11 @@ export default function Login({
     }
 
     async function logout() {
+        await fetch('/api/auth/logout', {
+            method: 'DELETE',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ token: token}),
+        })
         setUsername("");
         setAuthenticated(false);
     }
