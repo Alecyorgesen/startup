@@ -60,6 +60,10 @@ apiRouter.get("/scores", async (req, res) => {
 
 apiRouter.post("/score", async (req, res) => {
   const score = req.body.score;
+  if (!score) {
+    console.log("No score was sent!!!");
+    return;
+  }
   const user = Object.values(users).find(
     (user) => user.token === req.body.token
   );

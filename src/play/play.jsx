@@ -9,8 +9,41 @@ export default function Play({
   setGameInProgress,
   pngList,
   setPngList,
+  username,
+  token
 }) {
   let alt = "gray_squre";
+
+  React.useEffect(() => {
+    for (let i = 5; i < 10; i++) {
+      if (pngList[i] !== "gray_square.png") {
+        return;
+      }
+    }
+    for (let i = 0; i < 5; i++) {
+      if (pngList[i] === "gray_square.png") {
+        return;
+      }
+    }
+    let score = 0;
+    for (let i = 0; i < 5; i++) {
+      score += compare(pngList[i], pngList[i + 5]);
+    }
+    let rps = ["rock.png", "paper.png", "scissors.png"];
+    let pngListCopy = pngList.slice();
+    for (let i = 5; i < 10; i++) {
+      let randomNumber = Math.floor(Math.random() * rps.length);
+      pngListCopy[i] = rps[randomNumber];
+    }
+    setPngList(pngListCopy);
+    fetch('/api/score', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ score: score, name: username, token: token })
+    })
+    setGameInProgress(false);
+  }, [pngList]);
+
   return (
     <main>
       {gameInProgress === false && (
@@ -18,14 +51,14 @@ export default function Play({
           <Button
             type="submit"
             className="btn btn-primary m-2 button"
-            onClick={() => setGameInProgress(true)}
+            onClick={startGame}
           >
             Find random match
           </Button>
           <Button
             type="submit"
             className="btn btn-primary m-2 button"
-            onClick={() => setGameInProgress(true)}
+            onClick={startGame}
           >
             Play against a friend
           </Button>
@@ -62,7 +95,12 @@ export default function Play({
     </main>
   );
 
-  async function startGame() {
+  function startGame() {
+    let list = [];
+    for (let i in pngList) {
+      list.push("gray_square.png");
+    }
+    setPngList(list);
     setGameInProgress(true);
   }
 
@@ -122,5 +160,27 @@ export default function Play({
     let newList = [...pngList];
     newList[i] = type;
     setPngList(newList);
+  }
+}
+
+function compare(pic1, pic2) {
+  if (pic1 == "rock.png" && pic2 == "paper.png") {
+    return -1;
+  } else if (pic1 == "rock.png" && pic2 == "scissors.png") {
+    return 1;
+  } else if (pic1 == "rock.png" && pic2 == "rock.png") {
+    return 0;
+  } else if (pic1 == "paper.png" && pic2 == "paper.png") {
+    return 0;
+  } else if (pic1 == "paper.png" && pic2 == "scissors.png") {
+    return -1;
+  } else if (pic1 == "paper.png" && pic2 == "rock.png") {
+    return 1;
+  } else if (pic1 == "scissors.png" && pic2 == "paper.png") {
+    return 1;
+  } else if (pic1 == "scissors.png" && pic2 == "scissors.png") {
+    return 0;
+  } else if (pic1 == "scissors.png" && pic2 == "rock.png") {
+    return -1;
   }
 }

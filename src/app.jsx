@@ -106,6 +106,8 @@ export default function App() {
                 setGameInProgress={setGameInProgress}
                 pngList={pngList}
                 setPngList={setPngList}
+                username={username}
+                token={token}
               />
             }
           />
