@@ -15,6 +15,17 @@ export default function Play({
   let alt = "gray_squre";
 
   React.useEffect(() => {
+    let score = 0;
+    for (let i = 0; i < 5; i++) {
+      score += compare(pngList[i], pngList[i + 5]);
+    }
+    if (score != 0 && score != NaN) {
+      fetch('/api/score', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ score: score, name: username, token: token })
+      })
+    }
     for (let i = 5; i < 10; i++) {
       if (pngList[i] !== "gray_square.png") {
         return;
@@ -25,10 +36,6 @@ export default function Play({
         return;
       }
     }
-    let score = 0;
-    for (let i = 0; i < 5; i++) {
-      score += compare(pngList[i], pngList[i + 5]);
-    }
     let rps = ["rock.png", "paper.png", "scissors.png"];
     let pngListCopy = pngList.slice();
     for (let i = 5; i < 10; i++) {
@@ -36,11 +43,6 @@ export default function Play({
       pngListCopy[i] = rps[randomNumber];
     }
     setPngList(pngListCopy);
-    fetch('/api/score', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ score: score, name: username, token: token })
-    })
     setGameInProgress(false);
   }, [pngList]);
 
