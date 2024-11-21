@@ -59,31 +59,34 @@ apiRouter.get("/scores", async (req, res) => {
 });
 
 apiRouter.post("/score", async (req, res) => {
-  const score = req.body.score;
-  if (!score) {
-    console.log("No score was sent!!!");
-    return;
+  if (!req.body || !req.body.token || typeof req.body.score !== "number") {
+    console.log("Invalid request: No token or score was sent!!!");
+    return res.status(400).send("Invalid request");
   }
+
   const user = Object.values(users).find(
     (user) => user.token === req.body.token
   );
+  if (!user) {
+    return res.status(404).send("User not found");
+  }
   const prevScore = scores.find((score) => score.name === user.name);
-  if (score.score > prevScore.score) {
-    i = 0;
-    for (score of scores) {
-      if (score.name === prevScore.name) {
-        break;
+  if (prevScore) {
+    if (req.body.score > prevScore.score) {
+      i = 0;
+      for (score of scores) {
+        if (score.name === prevScore.name) {
+          break;
+        }
+        i += 1;
       }
-      i += 1;
+      scores[i] = score;
     }
-    scores[i] = score;
   }
-  scores.sort((item1, item2) => (item1 > item2 ? item1 : item2));
-  if (scores.length >= 20) {
-    res.send(scores.slice(0, 20));
-    return;
-  }
-  res.send(scores);
+
+  scores.sort((item1, item2) => item2.score - item1.score);
+
+  res.send(scores.slice(0, 20));
 });
 
 apiRouter.get("/hey", async (req, res) => {

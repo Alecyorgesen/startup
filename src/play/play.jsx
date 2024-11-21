@@ -19,11 +19,11 @@ export default function Play({
     for (let i = 0; i < 5; i++) {
       score += compare(pngList[i], pngList[i + 5]);
     }
-    if (score != 0 && score != NaN) {
+    if (score !== 0) {
       fetch('/api/score', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ score: score, name: username, token: token })
+        body: JSON.stringify({ score: score, token: token })
       })
     }
     for (let i = 5; i < 10; i++) {
