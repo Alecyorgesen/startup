@@ -24,7 +24,13 @@ const scoreCollection = db.collection("score");
 });
 
 function getUser(username) {
-  return userCollection.findOne({ username: username });
+  const user = userCollection.findOne({ username: username });
+  const token = uuid.v4();
+  userCollection.findOneAndReplace(
+    { username: username },
+    { username: user.username, password: user.password, token: token }
+  );
+  return user;
 }
 
 function getUserByToken(token) {
@@ -62,7 +68,7 @@ async function getHighScores() {
   highScores.sort((score1, score2) => {
     return score2 - score1; // If it returns a positive number, it swaps the elements. So, if the second number is bigger, than swap.
   });
-  return highScores.slice(0,50);
+  return highScores.slice(0, 50);
 }
 
 module.exports = {

@@ -1,6 +1,7 @@
 const express = require("express");
 const uuid = require("uuid");
 const database = require("./database.js");
+const bcrypt = require("bcrypt");
 const app = express();
 
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
@@ -26,7 +27,8 @@ apiRouter.post("/auth/create", async (req, res) => {
 apiRouter.post("/auth/login", async (req, res) => {
   const user = database.getUser(req.body.username);
   if (user) {
-    if (req.body.password === user.password) {
+    const passwordHash = await bcrypt.hash(password, 10);
+    if (passwordHash === user.password) {
       user.token = uuid.v4();
       users[user.username] = user;
 
