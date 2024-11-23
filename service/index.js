@@ -1,10 +1,7 @@
 const express = require("express");
 const uuid = require("uuid");
+const database = require("./database.js")
 const app = express();
-const database = require("database.js");
-
-let users = {};
-let scores = [];
 
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 
@@ -16,7 +13,7 @@ const apiRouter = express.Router();
 app.use("/api", apiRouter);
 
 apiRouter.post("/auth/create", async (req, res) => {
-  const user = null;
+  const user = database.;
   if (user) {
     res.status(409).send({ msg: "User already exists" });
   } else {
