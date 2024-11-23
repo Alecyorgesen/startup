@@ -17,19 +17,14 @@ apiRouter.post("/auth/create", async (req, res) => {
   if (user) {
     res.status(409).send({ msg: "User already exists" });
   } else {
-    const user = {
-      username: req.body.username,
-      password: req.body.password,
-      token: uuid.v4(),
-    };
-    users[user.username] = user;
+    const token = database.createUser(req.body.username, req.body.password);
 
-    res.send({ token: user.token });
+    res.send({ token: token });
   }
 });
 
 apiRouter.post("/auth/login", async (req, res) => {
-  const user = users[req.body.username];
+  const user = database.getUser(req.body.username);
   if (user) {
     if (req.body.password === user.password) {
       user.token = uuid.v4();

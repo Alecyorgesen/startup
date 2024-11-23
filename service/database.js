@@ -41,7 +41,7 @@ async function createUser(username, password) {
   };
   await userCollection.insertOne(user);
 
-  return user;
+  return user.token;
 }
 
 function addScore(score) {
