@@ -1,6 +1,6 @@
 const express = require("express");
 const uuid = require("uuid");
-const database = require("./database.js")
+const database = require("./database.js");
 const app = express();
 
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
@@ -13,27 +13,27 @@ const apiRouter = express.Router();
 app.use("/api", apiRouter);
 
 apiRouter.post("/auth/create", async (req, res) => {
-  const user = database.;
+  const user = database.getUser(req.body.username);
   if (user) {
     res.status(409).send({ msg: "User already exists" });
   } else {
     const user = {
-      name: req.body.name,
+      username: req.body.username,
       password: req.body.password,
       token: uuid.v4(),
     };
-    users[user.name] = user;
+    users[user.username] = user;
 
     res.send({ token: user.token });
   }
 });
 
 apiRouter.post("/auth/login", async (req, res) => {
-  const user = users[req.body.name];
+  const user = users[req.body.username];
   if (user) {
     if (req.body.password === user.password) {
       user.token = uuid.v4();
-      users[user.name] = user;
+      users[user.username] = user;
 
       res.send({ token: user.token });
       return;
@@ -68,12 +68,12 @@ apiRouter.post("/score", async (req, res) => {
   if (!user) {
     return res.status(404).send("User not found");
   }
-  const prevScore = scores.find((score) => score.name === user.name);
+  const prevScore = scores.find((score) => score.username === user.username);
   if (prevScore) {
     if (req.body.score > prevScore.score) {
       i = 0;
       for (score of scores) {
-        if (score.name === prevScore.name) {
+        if (score.username === prevScore.username) {
           break;
         }
         i += 1;
