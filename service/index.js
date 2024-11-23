@@ -29,10 +29,9 @@ apiRouter.post("/auth/login", async (req, res) => {
   if (user) {
     const passwordHash = await bcrypt.hash(password, 10);
     if (passwordHash === user.password) {
-      user.token = uuid.v4();
-      users[user.username] = user;
+      const token = database.getUser(req.body.username);
 
-      res.send({ token: user.token });
+      res.send({ token: token });
       return;
     }
   }
@@ -40,16 +39,12 @@ apiRouter.post("/auth/login", async (req, res) => {
 });
 
 apiRouter.delete("/auth/logout", async (req, res) => {
-  const user = Object.values(users).find(
-    (user) => user.token === req.body.token
-  );
-  if (user) {
-    delete user.token;
-  }
+  console.log("User logged out");
   res.status(204).end();
 });
 
 apiRouter.get("/scores", async (req, res) => {
+  const scores = await database.getHighScores();
   res.send(scores);
 });
 
@@ -59,11 +54,11 @@ apiRouter.post("/score", async (req, res) => {
     return res.status(400).send("Invalid request");
   }
 
-  const user = Object.values(users).find(
-    (user) => user.token === req.body.token
-  );
+  const user = database.getUserByToken(req.body.token);
   if (!user) {
     return res.status(404).send("User not found");
+  } else {
+    database.addScore(req.body);
   }
   const prevScore = scores.find((score) => score.username === user.username);
   if (prevScore) {

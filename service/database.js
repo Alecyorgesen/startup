@@ -30,7 +30,7 @@ function getUser(username) {
     { username: username },
     { username: user.username, password: user.password, token: token }
   );
-  return user;
+  return user.token;
 }
 
 function getUserByToken(token) {
@@ -53,13 +53,14 @@ async function createUser(username, password) {
 function addScore(score) {
   const currentScore = userCollection.findOne({ token: score.token });
   if (currentScore) {
+    let newScore = score.score + currentScore.score;
     scoreCollection.findOneAndUpdate(
       { username: username },
       { $inc: { score: newScore } }
     );
   } else {
     // if the current user doesn't have a score yet:
-    scoreCollection.insertOne({ score: score, username: username });
+    scoreCollection.insertOne({ score: score.score, username: username });
   }
 }
 
