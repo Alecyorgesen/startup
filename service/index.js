@@ -1,6 +1,7 @@
 const express = require("express");
 const uuid = require("uuid");
 const app = express();
+const database = require("database.js");
 
 let users = {};
 let scores = [];
@@ -11,11 +12,11 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-var apiRouter = express.Router();
+const apiRouter = express.Router();
 app.use("/api", apiRouter);
 
 apiRouter.post("/auth/create", async (req, res) => {
-  const user = users[req.body.name];
+  const user = null;
   if (user) {
     res.status(409).send({ msg: "User already exists" });
   } else {
@@ -89,7 +90,7 @@ apiRouter.post("/score", async (req, res) => {
   res.send(scores.slice(0, 20));
 });
 
-apiRouter.get("/hey", async (req, res) => {
+apiRouter.get("/hey", async (_req, res) => {
   res.send({ message: "Hey There!!!!!!!!" });
 });
 

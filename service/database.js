@@ -1,10 +1,14 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const bcrypt = require("bcrypt");
-const uuid = require('uuid');
+const uuid = require("uuid");
 const config = require("./dbConfig.json");
 
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
-const client = new MongoClient(url, { tls: true, serverSelectionTimeoutMS: 3000, autoSelectFamily: false, });
+const client = new MongoClient(url, {
+  tls: true,
+  serverSelectionTimeoutMS: 3000,
+  autoSelectFamily: false,
+});
 const db = client.db("simon");
 const userCollection = db.collection("user");
 const scoreCollection = db.collection("score");
@@ -27,11 +31,44 @@ function getUserByToken(token) {
   return userCollection.findOne({ token: token });
 }
 
-async function createUser(email, password) {
+async function createUser(username, password) {
   const passwordHash = await bcrypt.hash(password, 10);
 
   const user = {
-    email: email,
-    password:
+    username: username,
+    password: passwordHash,
+    token: uuid.v4(),
+  };
+  await userCollection.insertOne(user);
+
+  return user;
+}
+
+function addScore(score) {
+  const currentScore = userCollection.findOne({ token: score.token });
+  if (currentScore) {
+    scoreCollection.findOneAndUpdate(
+      { username: username },
+      { $inc: { score: newScore } }
+    );
+  } else {
+    // if the current user doesn't have a score yet:
+    scoreCollection.insertOne({ score: score, username: username });
   }
 }
+
+async function getHighScores() {
+  let highScores = await scoreCollection.find({});
+  highScores.sort((score1, score2) => {
+    return score2 - score1; // If it returns a positive number, it swaps the elements. So, if the second number is bigger, than swap.
+  });
+  return highScores.slice(0,50);
+}
+
+module.exports = {
+  getUser,
+  getUserByToken,
+  createUser,
+  addScore,
+  getHighScores,
+};
