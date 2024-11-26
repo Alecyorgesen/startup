@@ -13,38 +13,20 @@ export default function Play({
   token
 }) {
   let alt = "gray_squre";
-
+  const [submitVisible, setSubmitVisible] = React.useState(false);
   React.useEffect(() => {
-    let score = 0;
     for (let i = 0; i < 5; i++) {
-      score += compare(pngList[i], pngList[i + 5]);
-    }
-    if (score !== 0) {
-      fetch('/api/score', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ score: score, token: token })
-      })
-    }
-    for (let i = 5; i < 10; i++) {
-      if (pngList[i] !== "gray_square.png") {
+      if (pngList[i] == 'gray_square.png') {
+        if (submitVisible === true) {
+          setSubmitVisible(false);
+        }
         return;
       }
     }
-    for (let i = 0; i < 5; i++) {
-      if (pngList[i] === "gray_square.png") {
-        return;
-      }
+    if (submitVisible === false) {
+      setSubmitVisible(true);
     }
-    let rps = ["rock.png", "paper.png", "scissors.png"];
-    let pngListCopy = pngList.slice();
-    for (let i = 5; i < 10; i++) {
-      let randomNumber = Math.floor(Math.random() * rps.length);
-      pngListCopy[i] = rps[randomNumber];
-    }
-    setPngList(pngListCopy);
-    setGameInProgress(false);
-  }, [pngList]);
+  }, [pngList])
 
   return (
     <main>
@@ -94,8 +76,42 @@ export default function Play({
         <Image png={pngList[3]} alt={alt} />
         <Image png={pngList[4]} alt={alt} />
       </div>
+      {gameInProgress === true && submitVisible === true && (
+        <div className="d-flex justify-content-center">
+          <Button
+            type="submit"
+            className="btn btn-primary m-2 button"
+            onClick={submit}
+          >
+            Submit
+          </Button>
+        </div>
+      )}
+
     </main>
   );
+
+  async function submit() {
+    let rps = ["rock.png", "paper.png", "scissors.png"];
+    let pngListCopy = pngList.slice();
+    for (let i = 5; i < 10; i++) {
+      let randomNumber = Math.floor(Math.random() * rps.length);
+      pngListCopy[i] = rps[randomNumber];
+    }
+    await setPngList(pngListCopy);
+    let score = 0;
+    for (let i = 0; i < 5; i++) {
+      score += compare(pngList[i], pngListCopy[i + 5]);
+    }
+    if (score !== 0) {
+      fetch('/api/score', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ score: score, token: token })
+      })
+    }
+    setGameInProgress(false);
+  }
 
   function startGame() {
     let list = [];

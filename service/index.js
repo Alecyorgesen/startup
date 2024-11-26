@@ -14,24 +14,25 @@ const apiRouter = express.Router();
 app.use("/api", apiRouter);
 
 apiRouter.post("/auth/create", async (req, res) => {
-  const user = database.getUser(req.body.username);
+  const user = await database.getUser(req.body.username);
   if (user) {
     res.status(409).send({ msg: "User already exists" });
   } else {
-    const token = database.createUser(req.body.username, req.body.password);
+    const token = await database.createUser(req.body.username, req.body.password);
 
     res.send({ token: token });
   }
 });
 
 apiRouter.post("/auth/login", async (req, res) => {
-  const user = database.getUser(req.body.username);
+  const user = await database.getUser(req.body.username);
   if (user) {
-    const passwordHash = await bcrypt.hash(password, 10);
-    if (passwordHash === user.password) {
-      const token = database.getUser(req.body.username);
-
+    const passwordHash = await bcrypt.hash(req.body.password, 10);
+    if (bcrypt.compare(passwordHash, user.password)) {
+      const userInfo = await database.getUser(req.body.username);
+      const token = userInfo.token;
       res.send({ token: token });
+      console.log(`${userInfo.username} logged in`);
       return;
     }
   }
@@ -54,29 +55,15 @@ apiRouter.post("/score", async (req, res) => {
     return res.status(400).send("Invalid request");
   }
 
-  const user = database.getUserByToken(req.body.token);
+  const user = await database.getUserByToken(req.body.token);
   if (!user) {
     return res.status(404).send("User not found");
   } else {
-    database.addScore(req.body);
-  }
-  const prevScore = scores.find((score) => score.username === user.username);
-  if (prevScore) {
-    if (req.body.score > prevScore.score) {
-      i = 0;
-      for (score of scores) {
-        if (score.username === prevScore.username) {
-          break;
-        }
-        i += 1;
-      }
-      scores[i] = score;
-    }
-  }
 
-  scores.sort((item1, item2) => item2.score - item1.score);
-
-  res.send(scores.slice(0, 20));
+    await database.addScore(req.body.score, req.body.token, user.username);
+  }
+  const scores = await database.getHighScores();
+  res.send(scores);
 });
 
 apiRouter.get("/hey", async (_req, res) => {

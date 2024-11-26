@@ -54,5 +54,5 @@ The web application is just going to be a bit of fun. It will be rock, paper, sc
 
 ## Database
 - [x] Set up MongoDB
-- [ ] Store user information in database with hashed passwords
+- [x] Store user information in database with hashed passwords
 - [ ] Save total number of points in the database and display them in the scores section
