@@ -200,5 +200,7 @@ function compare(pic1, pic2) {
     return 0;
   } else if (pic1 == "scissors.png" && pic2 == "rock.png") {
     return -1;
+  } else {
+    return 0;
   }
 }

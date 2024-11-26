@@ -60,7 +60,7 @@ apiRouter.post("/score", async (req, res) => {
     return res.status(404).send("User not found");
   } else {
 
-    await database.addScore(req.body.score, req.body.token, user.username);
+    await database.addScore(req.body.score, user.username);
   }
   const scores = await database.getHighScores();
   res.send(scores);

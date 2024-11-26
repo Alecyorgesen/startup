@@ -57,13 +57,12 @@ async function createUser(username, password) {
   return user.token;
 }
 
-async function addScore(score, token, username) {
-  const currentScore = await scoreCollection.findOne({ token: token });
+async function addScore(score, username) {
+  const currentScore = await scoreCollection.findOne({ username: username });
   if (currentScore) {
-    let newScore = score.score + currentScore.score;
     scoreCollection.findOneAndUpdate(
       { username: username },
-      { $inc: { score: newScore } }
+      { $inc: { score: score } }
     );
   } else {
     // if the current user doesn't have a score yet:

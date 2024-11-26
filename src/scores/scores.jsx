@@ -4,18 +4,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Scores() {
     const [scores, setScores] = React.useState([]);
-
-    React.useEffect(() => {
-        fetch('/api/scores')
-            .then((response) => response.json())
-            .then((scores) => {
-                setScores(scores);
-            });
-    }, []);
-    let scoreRows = [];
-    for (index in scores) {
-        scoreRows.push(<Score index={index} />)
-    }
+    fetch('/api/scores')
+        .then((response) => response.json())
+        .then((highScores) => {
+            let scoreRows = [];
+            for (let [index, score] of highScores.entries()) {
+                scoreRows.push(<Score index={index} username={score.username} score={score.score} />);
+                setScores(scoreRows);
+            }
+        });
 
     return (
         <main>
@@ -27,19 +24,18 @@ export default function Scores() {
                         <th>Wins</th>
                     </tr>
                 </thead>
-                <tbody>{scoreRows}</tbody>
+                <tbody>{scores}</tbody>
             </table>
         </main>
     );
-}
+    function Score({ index, username, score }) {
 
-function Score({ index }) {
-
-    return (
-        <tr>
-            <td>{index + 1}</td>
-            <td>{scores[index].name}</td>
-            <td>{scores[index].score}</td>
-        </tr>
-    )
+        return (
+            <tr>
+                <td>{index + 1}</td>
+                <td>{username}</td>
+                <td>{score}</td>
+            </tr>
+        )
+    }
 }
