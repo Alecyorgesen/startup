@@ -14,7 +14,9 @@ export default function Play({
 }) {
   let alt = "gray_squre";
   const [submitVisible, setSubmitVisible] = React.useState(false);
-  const [opponentName, setOpponentName] = React.useState('')
+  const [opponentName, setOpponentName] = React.useState('');
+  const [inputText, setInputText] = React.useState('')
+  
   React.useEffect(() => {
     for (let i = 0; i < 5; i++) {
       if (pngList[i] == 'gray_square.png') {
@@ -36,21 +38,21 @@ export default function Play({
           <Button
             type="submit"
             className="btn btn-primary m-2 button"
-            onClick={startGame}
+            onClick={startGameAgainstRandomPlayer}
           >
             Find random match
           </Button>
           <Button
             type="submit"
             className="btn btn-primary m-2 button"
-            onClick={startGame}
+            onClick={startGameAgainstPlayer}
           >
             Play against a friend
           </Button>
           <Button
             type="submit"
             className="btn btn-primary m-2 button"
-            onClick={startGame}
+            onClick={startGameAgainstBot}
           >
             Play against the bot (:&lt;
           </Button>
@@ -130,7 +132,25 @@ export default function Play({
     setGameStatus('noGame');
   }
 
-  function startGame() {
+  function startGameAgainstBot() {
+    let list = [];
+    for (let i in pngList) {
+      list.push("gray_square.png");
+    }
+    setPngList(list);
+    setGameStatus('gameAgainstBot');
+  }
+
+  function startGameAgainstRandomPlayer() {
+    let list = [];
+    for (let i in pngList) {
+      list.push("gray_square.png");
+    }
+    setPngList(list);
+    setGameStatus('gameAgainstBot');
+  }
+
+  function startGameAgainstPlayer() {
     let list = [];
     for (let i in pngList) {
       list.push("gray_square.png");
