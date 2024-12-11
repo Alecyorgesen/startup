@@ -18,7 +18,7 @@ import "./app.css";
 export default function App() {
   const [username, setUsername] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
-  const [gameInProgress, setGameInProgress] = useState(false);
+  const [gameStatus, setGameStatus] = useState('noGame');
   const [token, setToken] = useState('');
 
   let list = [];
@@ -102,8 +102,8 @@ export default function App() {
             path="/play"
             element={
               <Play
-                gameInProgress={gameInProgress}
-                setGameInProgress={setGameInProgress}
+                gameStatus={gameStatus}
+                setGameStatus={setGameStatus}
                 pngList={pngList}
                 setPngList={setPngList}
                 username={username}

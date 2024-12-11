@@ -5,8 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js"; //I might change this later...
 
 export default function Play({
-  gameInProgress,
-  setGameInProgress,
+  gameStatus,
+  setGameStatus,
   pngList,
   setPngList,
   username,
@@ -30,7 +30,7 @@ export default function Play({
 
   return (
     <main>
-      {gameInProgress === false && (
+      {gameStatus === 'noGame' && (
         <nav className="d-flex justify-content-center">
           <Button
             type="submit"
@@ -58,7 +58,7 @@ export default function Play({
       </div>
 
       <div className="row pt-5">
-        {gameInProgress === true && (
+        {gameStatus === 'gameAgainstBot' && (
           <>
             <Dropdown number={0} />
             <Dropdown number={1} />
@@ -76,7 +76,7 @@ export default function Play({
         <Image png={pngList[3]} alt={alt} />
         <Image png={pngList[4]} alt={alt} />
       </div>
-      {gameInProgress === true && submitVisible === true && (
+      {gameStatus === 'gameAgainstBot' || gameStatus === 'gameAgainstPlayer' && submitVisible === true && (
         <div className="d-flex justify-content-center">
           <Button
             type="submit"
@@ -110,7 +110,7 @@ export default function Play({
         body: JSON.stringify({ score: score, token: token })
       })
     }
-    setGameInProgress(false);
+    setGameStatus('noGame');
   }
 
   function startGame() {
@@ -119,7 +119,7 @@ export default function Play({
       list.push("gray_square.png");
     }
     setPngList(list);
-    setGameInProgress(true);
+    setGameStatus('gameAgainstBot');
   }
 
   function Image({ png, alt }) {

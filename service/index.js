@@ -4,7 +4,7 @@ const database = require("./database.js");
 const bcrypt = require("bcrypt");
 const app = express();
 
-const { WebSocketServer } = require('ws');
+const { WebSocketServer } = require("ws");
 
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 
@@ -16,21 +16,21 @@ app.use(express.static("public"));
 const wss = new WebSocketServer({ noServer: true });
 
 // Handle the protocol upgrade from HTTP to WebSocket
-server.on('upgrade', (request, socket, head) => {
+app.on("upgrade", (request, socket, head) => {
   wss.handleUpgrade(request, socket, head, function done(ws) {
-    wss.emit('connection', ws, request);
+    wss.emit("connection", ws, request);
   });
 });
 
 // Keep track of all the connections so we can forward messages
 let connections = [];
 
-wss.on('connection', (ws) => {
+wss.on("connection", (ws) => {
   const connection = { id: connections.length + 1, alive: true, ws: ws };
   connections.push(connection);
 
   // Forward messages to everyone except the sender
-  ws.on('message', function message(data) {
+  ws.on("message", function message(data) {
     connections.forEach((c) => {
       if (c.id !== connection.id) {
         c.ws.send(data);
@@ -39,7 +39,7 @@ wss.on('connection', (ws) => {
   });
 
   // Remove the closed connection so we don't try to forward anymore
-  ws.on('close', () => {
+  ws.on("close", () => {
     connections.findIndex((o, i) => {
       if (o.id === connection.id) {
         connections.splice(i, 1);
@@ -47,7 +47,24 @@ wss.on('connection', (ws) => {
       }
     });
   });
+
+  // Respond to pong messages by marking the connection alive
+  ws.on("pong", () => {
+    connection.alive = true;
+  });
 });
+
+setInterval(() => {
+  connections.forEach((c) => {
+    // Kill any connection that didn't respond to the ping last time
+    if (!c.alive) {
+      c.ws.terminate();
+    } else {
+      c.alive = false;
+      c.ws.ping();
+    }
+  });
+}, 10000);
 
 const apiRouter = express.Router();
 app.use("/api", apiRouter);
@@ -57,7 +74,10 @@ apiRouter.post("/auth/create", async (req, res) => {
   if (user) {
     res.status(409).send({ msg: "User already exists" });
   } else {
-    const token = await database.createUser(req.body.username, req.body.password);
+    const token = await database.createUser(
+      req.body.username,
+      req.body.password
+    );
 
     res.send({ token: token });
   }
@@ -98,7 +118,6 @@ apiRouter.post("/score", async (req, res) => {
   if (!user) {
     return res.status(404).send("User not found");
   } else {
-
     await database.addScore(req.body.score, user.username);
   }
   const scores = await database.getHighScores();
