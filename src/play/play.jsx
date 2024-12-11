@@ -76,7 +76,7 @@ export default function Play({
         <Image png={pngList[3]} alt={alt} />
         <Image png={pngList[4]} alt={alt} />
       </div>
-      {gameStatus === 'gameAgainstBot' || gameStatus === 'gameAgainstPlayer' && submitVisible === true && (
+      {(gameStatus === 'gameAgainstBot' || gameStatus === 'gameAgainstPlayer') && submitVisible === true && (
         <div className="d-flex justify-content-center">
           <Button
             type="submit"
