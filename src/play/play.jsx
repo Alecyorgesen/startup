@@ -14,6 +14,7 @@ export default function Play({
 }) {
   let alt = "gray_squre";
   const [submitVisible, setSubmitVisible] = React.useState(false);
+  const [opponentName, setOpponentName] = React.useState('')
   React.useEffect(() => {
     for (let i = 0; i < 5; i++) {
       if (pngList[i] == 'gray_square.png') {
@@ -46,7 +47,23 @@ export default function Play({
           >
             Play against a friend
           </Button>
+          <Button
+            type="submit"
+            className="btn btn-primary m-2 button"
+            onClick={startGame}
+          >
+            Play against the bot (:&lt;
+          </Button>
         </nav>
+      )}
+      {gameStatus !== 'noGame' && (
+        <div
+          className="d-flex justify-content-center align-items-center"
+        >
+          <div className="border p-3 rounded shadow" style={{ backgroundColor: "#f8f9fa" }}>
+            <h4 className="text-center">{opponentName}</h4>
+          </div>
+        </div>
       )}
 
       <div className="row p-5">
