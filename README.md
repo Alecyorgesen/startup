@@ -56,3 +56,8 @@ The web application is just going to be a bit of fun. It will be rock, paper, sc
 - [x] Set up MongoDB
 - [x] Store user information in database with hashed passwords
 - [x] Save total number of points in the database and display them in the scores section
+
+## Websocket
+
+- [ ] Add multiplayer functionality (even if primitive)
+- [ ] At the very least make something work :)

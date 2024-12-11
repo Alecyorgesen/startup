@@ -4,15 +4,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Scores() {
     const [scores, setScores] = React.useState([]);
-    fetch('/api/scores')
-        .then((response) => response.json())
-        .then((highScores) => {
-            let scoreRows = [];
-            for (let [index, score] of highScores.entries()) {
-                scoreRows.push(<Score index={index} username={score.username} score={score.score} />);
-                setScores(scoreRows);
-            }
-        });
+
+    React.useEffect(() => {
+        fetch('/api/scores')
+            .then((response) => response.json())
+            .then((highScores) => {
+                let scoreRows = [];
+                for (let [index, score] of highScores.entries()) {
+                    scoreRows.push(<Score index={index} username={score.username} score={score.score} />);
+                    setScores(scoreRows);
+                }
+            });
+    }, [])
 
     return (
         <main>
