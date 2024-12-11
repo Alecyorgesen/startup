@@ -33,19 +33,19 @@ The web application is just going to be a bit of fun. It will be rock, paper, sc
 - [x] play.html: This is where you will actually be able to play the game. Right now it just has buttons. I'll probably switch it out for drop down menus.
 - [x] scores.html: This is here to see who has the most wins. Eventually it will pull information from a database.
 - [x] about.html: This is here so that you can learn more about the game.
-- [ ] I want to replace the buttons with dropdown menus, but I'll have to do that later with Bootstrap.
+- [ x I want to replace the buttons with dropdown menus, but I'll have to do that later with Bootstrap.
 - [x] Added placeholder image from another website. The idea is it's from database that's not mine.
 
 ## CSS
 - [x] Login page: It's pretty good! Nothing too extravagant here.
-- [ ] Play page: There are still things that I think that I should change, and I know that there are things that I should add, but I'll get to those things later as I actually make the game functional.
+- [x] Play page: There are still things that I think that I should change, and I know that there are things that I should add, but I'll get to those things later as I actually make the game functional.
 - [x] Scores page: I'm just using the default bootstrap table here. Nothing crazy going on.
 - [x] About page: I managed to get things centered. I'll later make it so that random pictures show up from some other website I think.
 
 ## React
 - [x] Convert everything to react!
 - [x] Make a mock version of the login and create new account functionality!
-- [ ] Make a mock version of the game!!!! Play against a bot maybe? I partially did this. You can't play yet, but you can select the different options that are available.
+- [x] Make a mock version of the game!!!! Play against a bot maybe? I partially did this. You can't play yet, but you can select the different options that are available.
 
 ## Services
 - [x] Create end points
