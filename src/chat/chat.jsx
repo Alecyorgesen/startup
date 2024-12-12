@@ -1,12 +1,16 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button } from "bootstrap/dist/js/bootstrap.bundle.min";
+import Button from "react-bootstrap/Button";
 import { chatWebSocket } from "./chatWebSocket";
 
 
 export default function Chat({ username }) {
     const [currentText, setCurrentText] = React.useState('');
     const [messages, setMessages] = React.useState([]);
+
+    React.useEffect(() => {
+        chatWebSocket.getMessage = () => getMessage()
+    }, [])
 
     return (
         <main>
@@ -36,9 +40,14 @@ export default function Chat({ username }) {
         )
     }
     function sendMessage() {
-        chatWebSocket.sendMessage({ username, currentText });
-        let newList = [...messages]
-        newList.push(<ChatMessage username={username} message={currentText} />)
+        chatWebSocket.sendMessage("message", { username, currentText });
+        let newList = [...messages];
+        newList.push(<ChatMessage username={username} message={currentText} />);
         setCurrentText('');
+    }
+
+    function getMessage(){
+        let newList = [...messages];
+        newList.push(<ChatMessage username={username} message={currentText} />);
     }
 }

@@ -25,7 +25,7 @@ class Message {
           // Run a function here depending on what the message is
           switch (message.type) {
             case "message":
-              message();
+              this.getMessage(message.value);
               break;
           }
         } catch {}

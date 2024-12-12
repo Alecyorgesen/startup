@@ -94,6 +94,8 @@ wss.on("connection", (ws) => {
         submission(message.value);
       } else if (message.type === "addUsername") {
         addUsername(message.value, connection);
+      } else if (message.type === "message") {
+        messageAllExceptSelf(value, ws);
       }
     });
   });
@@ -151,6 +153,14 @@ function submission(value) {
 
 function addUsername(value, connection) {
   playerNameToConnection[value.playerName] = connection;
+}
+
+function messageAllExceptSelf(value, ws) {
+  for (let connection of connections) {
+    if (connection.id != ws.id) {
+      connection.ws.send(value)
+    }
+  }
 }
 
 const apiRouter = express.Router();
