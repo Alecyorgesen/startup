@@ -26,7 +26,6 @@ app.on("upgrade", (request, socket, head) => {
 // Keep track of all the connections so we can forward messages
 let connections = [];
 let games = [];
-let challenges = new Set();
 let playerNameToConnection = {};
 class Challenge {
   constructor(challenger, challenged = null) {
@@ -129,13 +128,15 @@ setInterval(() => {
 
 function challenge(value) {
   console.log("challenger");
-  challenges.add(new Challenge(value.challenger, value.challenged));
   let connection = playerNameToConnection[value.challenged];
-  connection.ws.send(value);
+  connection?.ws.send(value);
 }
 
 function acceptChallenge(value) {
   console.log("acceptedChallenged");
+  games.push(new Game(value.challenger, value.challenged));
+  playerNameToConnection[value.challenger]?.send({ type: "startGame" });
+  playerNameToConnection[value.challenged]?.send({ type: "startGame" });
 }
 
 function submission(value) {}
