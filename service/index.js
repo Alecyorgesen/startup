@@ -130,6 +130,8 @@ setInterval(() => {
 function challenge(value) {
   console.log("challenger");
   challenges.add(new Challenge(value.challenger, value.challenged));
+  let connection = playerNameToConnection[value.challenged];
+  connection.ws.send(value);
 }
 
 function acceptChallenge(value) {
