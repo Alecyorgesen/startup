@@ -54,14 +54,15 @@ class Game {
   }
 
   informPlayer(messageString, connection) {
-    message = { type: message, value: { msg: messageString } };
-    connection.ws.send(message)
+    let message = { type: message, value: { msg: messageString } };
+    connection.ws.send(message);
   }
 
   gameFinish() {
-    
-    this.connection1.ws.send()
-    this.connection2.ws.send()
+    let message1 = { type: "endGame", value: { submission: this.submission2 } };
+    let message2 = { type: "endGame", value: { submission: this.submission1 } };
+    this.connection1.ws.send(message1);
+    this.connection2.ws.send(message2);
   }
 }
 
@@ -77,10 +78,13 @@ wss.on("connection", (ws) => {
       if (typeof message != "object") {
         console.log("something is not working, I promise");
       }
-      if (message.type == "challenge") {
+      if (message.type === "challenge") {
         challenge(message.value);
-      } else if (message.type == "acceptChallenge")
+      } else if (message.type === "acceptChallenge") {
         acceptChallenge(message.value);
+      } else if (message.type === "submission") {
+        submission(message.value);
+      }
     });
   });
 
@@ -112,11 +116,9 @@ setInterval(() => {
   });
 }, 10000);
 
-function challenge() {
-  console.log("Challenge");
-}
+function challenge(value) {}
 
-function acceptChallenge() {
+function acceptChallenge(value) {
   console.log("acceptedChallenge");
 }
 
