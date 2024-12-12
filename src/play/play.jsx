@@ -22,6 +22,10 @@ export default function Play({
   const [challengerName, setChallengerName] = React.useState('')
 
   React.useEffect(() => {
+    gameWebSocket.sendMessage({ type: 'addUsername', value: { playerName: username } })
+  }, [])
+
+  React.useEffect(() => {
     for (let i = 0; i < 5; i++) {
       if (pngList[i] == 'gray_square.png') {
         if (submitVisible === true) {

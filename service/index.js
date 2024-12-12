@@ -26,6 +26,7 @@ app.on("upgrade", (request, socket, head) => {
 let connections = [];
 let games = [];
 let challenges = new Set();
+let playerNameToConnection = {}
 class Challenge {
   constructor(challenger, challenged = null) {
     this.challenger = challenger;
@@ -126,6 +127,7 @@ setInterval(() => {
 function challenge(value) {
   console.log("challenger");
   challenges.add(new Challenge(value.challenger, value.challenged));
+
 }
 
 function acceptChallenge(value) {
