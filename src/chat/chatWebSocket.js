@@ -31,10 +31,6 @@ class Message {
         } catch {}
       };
     }
-
-    message() {
-
-    }
   
     sendMessage(type, value) {
       const event = new Message(type, value);

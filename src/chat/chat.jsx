@@ -10,7 +10,13 @@ export default function Chat({ username }) {
 
     return (
         <main>
-            <input className="form-control m-4" style={{ width: "500px" }}></input>
+            <input
+                className="form-control m-4"
+                style={{ width: "500px" }}
+                onChange={(event) => setCurrentText(event.target.value)}
+            >
+
+            </input>
             <Button
                 type="submit"
                 className="btn btn-primary m-2 button justify-content-center"
@@ -30,6 +36,9 @@ export default function Chat({ username }) {
         )
     }
     function sendMessage() {
-        chatWebSocket.sendMessage({ username, message})
+        chatWebSocket.sendMessage({ username, currentText });
+        let newList = [...messages]
+        newList.push(<ChatMessage username={username} message={currentText} />)
+        setCurrentText('');
     }
 }
