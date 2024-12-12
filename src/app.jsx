@@ -11,6 +11,7 @@ import Login from "./login/login";
 import Play from "./play/play";
 import Scores from "./scores/scores";
 import About from "./about/about";
+import Chat from "./chat/chat"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js"; //I might change this later...
 import "./app.css";
@@ -75,6 +76,11 @@ export default function App() {
                       About the game
                     </NavLink>
                   </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="chat">
+                      Chat
+                    </NavLink>
+                  </li>
                 </ul>
               </div>
               <div className="d-flex ms-auto">
@@ -113,6 +119,7 @@ export default function App() {
           />
           <Route path="/scores" element={<Scores />} />
           <Route path="/about" element={<About />} />
+          <Route path="/chat" element={<Chat />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 

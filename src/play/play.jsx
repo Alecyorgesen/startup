@@ -21,9 +21,9 @@ export default function Play({
   const [message, setMessage] = React.useState('');
   const [challengerName, setChallengerName] = React.useState('')
 
-  React.useEffect(() => {
-    gameWebSocket.sendMessage({ type: 'addUsername', value: { playerName: username } })
-  }, [])
+  // React.useEffect(() => {
+  //   gameWebSocket.sendMessage({ type: 'addUsername', value: { playerName: username } })
+  // }, [])
 
   React.useEffect(() => {
     for (let i = 0; i < 5; i++) {
