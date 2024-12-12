@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const app = express();
 
 const { WebSocketServer } = require("ws");
+const { ToastContainer } = require("react-bootstrap");
 
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 
@@ -26,7 +27,7 @@ app.on("upgrade", (request, socket, head) => {
 let connections = [];
 let games = [];
 let challenges = new Set();
-let playerNameToConnection = {}
+let playerNameToConnection = {};
 class Challenge {
   constructor(challenger, challenged = null) {
     this.challenger = challenger;
@@ -92,6 +93,8 @@ wss.on("connection", (ws) => {
         acceptChallenge(message.value);
       } else if (message.type === "submission") {
         submission(message.value);
+      } else if (message.type === "addUsername") {
+        addUsername(message.value, connection);
       }
     });
   });
@@ -127,11 +130,16 @@ setInterval(() => {
 function challenge(value) {
   console.log("challenger");
   challenges.add(new Challenge(value.challenger, value.challenged));
-
 }
 
 function acceptChallenge(value) {
   console.log("acceptedChallenged");
+}
+
+function submission(value) {}
+
+function addUsername(value, connection) {
+  playerNameToConnection[value.playerName] = connection;
 }
 
 const apiRouter = express.Router();
