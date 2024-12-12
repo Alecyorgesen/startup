@@ -25,6 +25,13 @@ app.on("upgrade", (request, socket, head) => {
 // Keep track of all the connections so we can forward messages
 let connections = [];
 let games = [];
+let challenges = new Set();
+class Challenge {
+  constructor(challenger, challenged = null) {
+    this.challenger = challenger;
+    this.challenged = challenged;
+  }
+}
 class Game {
   constructor(challenger, challenged, connection1, connection2) {
     this.player1 = challenger;
@@ -116,10 +123,13 @@ setInterval(() => {
   });
 }, 10000);
 
-function challenge(value) {}
+function challenge(value) {
+  console.log("challenger");
+  challenges.add(new Challenge(value.challenger, value.challenged));
+}
 
 function acceptChallenge(value) {
-  console.log("acceptedChallenge");
+  console.log("acceptedChallenged");
 }
 
 const apiRouter = express.Router();
