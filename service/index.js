@@ -135,11 +135,19 @@ function challenge(value) {
 function acceptChallenge(value) {
   console.log("acceptedChallenged");
   games.push(new Game(value.challenger, value.challenged));
-  playerNameToConnection[value.challenger]?.send({ type: "startGame" });
-  playerNameToConnection[value.challenged]?.send({ type: "startGame" });
+  playerNameToConnection[value.challenger]?.send({
+    type: "startGame",
+    gameNumber: games.length - 1,
+  });
+  playerNameToConnection[value.challenged]?.send({
+    type: "startGame",
+    gameNumber: games.length - 1,
+  });
 }
 
-function submission(value) {}
+function submission(value) {
+  // if (value.gameNumber === )
+}
 
 function addUsername(value, connection) {
   playerNameToConnection[value.playerName] = connection;
