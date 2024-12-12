@@ -33,7 +33,16 @@ class Game {
     this.submission2 = [];
   }
 
-  
+  submit(value) {
+    if (this.player1 === value.playerName) {
+      this.submission1 = value.submission;
+    } else {
+      this.submission2 = value.submission;
+    }
+    if (this.submission1.length > 0 && this.submission2.length > 0) {
+      gameFinish();
+    }
+  }
 }
 
 wss.on("connection", (ws) => {
