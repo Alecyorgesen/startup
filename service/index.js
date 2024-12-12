@@ -26,9 +26,11 @@ app.on("upgrade", (request, socket, head) => {
 let connections = [];
 let games = [];
 class Game {
-  constructor(challenger, challenged) {
+  constructor(challenger, challenged, connection1, connection2) {
     this.player1 = challenger;
     this.player2 = challenged;
+    this.connection1 = connection1;
+    this.connection2 = connection2;
     this.submission1 = [];
     this.submission2 = [];
   }
@@ -40,8 +42,26 @@ class Game {
       this.submission2 = value.submission;
     }
     if (this.submission1.length > 0 && this.submission2.length > 0) {
-      gameFinish();
+      this.gameFinish();
+      return;
     }
+    if (this.submission1.length > 0) {
+      this.informPlayer(`${this.player1} is ready!`, this.connection2);
+    }
+    if (this.submission2.length > 0) {
+      this.informPlayer(`${this.player2} is ready!`, this.connection1);
+    }
+  }
+
+  informPlayer(messageString, connection) {
+    message = { type: message, value: { msg: messageString } };
+    connection.ws.send(message)
+  }
+
+  gameFinish() {
+    
+    this.connection1.ws.send()
+    this.connection2.ws.send()
   }
 }
 
