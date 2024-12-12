@@ -76,11 +76,14 @@ export default function App() {
                       About the game
                     </NavLink>
                   </li>
-                  <li className="nav-item">
-                    <NavLink className="nav-link" to="chat">
-                      Chat
-                    </NavLink>
-                  </li>
+                  {authenticated === true && (
+                    <li className="nav-item">
+                      <NavLink className="nav-link" to="chat">
+                        Chat
+                      </NavLink>
+                    </li>
+                  )}
+
                 </ul>
               </div>
               <div className="d-flex ms-auto">
@@ -119,7 +122,7 @@ export default function App() {
           />
           <Route path="/scores" element={<Scores />} />
           <Route path="/about" element={<About />} />
-          <Route path="/chat" element={<Chat />} />
+          <Route path="/chat" element={<Chat username={username} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 
