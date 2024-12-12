@@ -3,6 +3,9 @@ import Button from "react-bootstrap/Button";
 import "./play.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js"; //I might change this later...
+import { WebSocket } from "vite";
+
+const WebSocketComponent =
 
 export default function Play({
   gameStatus,
@@ -15,8 +18,10 @@ export default function Play({
   let alt = "gray_squre";
   const [submitVisible, setSubmitVisible] = React.useState(false);
   const [opponentName, setOpponentName] = React.useState('');
-  const [inputText, setInputText] = React.useState('')
-  
+  const [responseText, setResponseTest] = React.useState('Search Player');
+  const [inputText, setInputText] = React.useState('');
+  const [message, setMessage] = React.useState('');
+
   React.useEffect(() => {
     for (let i = 0; i < 5; i++) {
       if (pngList[i] == 'gray_square.png') {
@@ -34,29 +39,40 @@ export default function Play({
   return (
     <main>
       {gameStatus === 'noGame' && (
-        <nav className="d-flex justify-content-center">
-          <Button
-            type="submit"
-            className="btn btn-primary m-2 button"
-            onClick={startGameAgainstRandomPlayer}
-          >
-            Find random match
-          </Button>
-          <Button
-            type="submit"
-            className="btn btn-primary m-2 button"
-            onClick={startGameAgainstPlayer}
-          >
-            Play against a friend
-          </Button>
-          <Button
-            type="submit"
-            className="btn btn-primary m-2 button"
-            onClick={startGameAgainstBot}
-          >
-            Play against the bot (:&lt;
-          </Button>
-        </nav>
+        <div className="container">
+          <div className="row">
+            <nav className="col">
+              <p className="d-flex justify-content-center">{responseText}</p>
+              <input className="form-control shadow mt-2 d-flex justify-content-center"
+                onChange={(event) => setInputText(event.target.value)}>
+              </input>
+            </nav>
+            <div className="col-md-auto">
+              <Button
+                type="submit"
+                className="btn btn-primary m-2 button justify-content-center"
+                onClick={startGameAgainstRandomPlayer}
+              >
+                Find random match
+              </Button>
+              <Button
+                type="submit"
+                className="btn btn-primary m-2 button justify-content-center"
+                onClick={startGameAgainstPlayer}
+              >
+                Play against a friend
+              </Button>
+              <Button
+                type="submit"
+                className="btn btn-primary m-2 button justify-content-center"
+                onClick={startGameAgainstBot}
+              >
+                Play against the bot (:&lt;
+              </Button>
+            </div>
+            <div className="col"></div>
+          </div>
+        </div>
       )}
       {gameStatus !== 'noGame' && (
         <div
@@ -139,6 +155,7 @@ export default function Play({
     }
     setPngList(list);
     setGameStatus('gameAgainstBot');
+    setOpponentName('The Bot (:<')
   }
 
   function startGameAgainstRandomPlayer() {
@@ -156,7 +173,8 @@ export default function Play({
       list.push("gray_square.png");
     }
     setPngList(list);
-    setGameStatus('gameAgainstBot');
+    setMessage(`Waiting for ${inputText} to respond...`);
+    ws
   }
 
   function Image({ png, alt }) {
