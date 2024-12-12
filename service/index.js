@@ -24,6 +24,17 @@ app.on("upgrade", (request, socket, head) => {
 
 // Keep track of all the connections so we can forward messages
 let connections = [];
+let games = [];
+class Game {
+  constructor(challenger, challenged) {
+    this.player1 = challenger;
+    this.player2 = challenged;
+    this.submission1 = [];
+    this.submission2 = [];
+  }
+
+  
+}
 
 wss.on("connection", (ws) => {
   const connection = { id: connections.length + 1, alive: true, ws: ws };
@@ -32,9 +43,15 @@ wss.on("connection", (ws) => {
   // Forward messages to everyone except the sender
   ws.on("message", function message(data) {
     connections.forEach((c) => {
-      if (c.id !== connection.id) {
-        c.ws.send(data);
+      message = { x: 1 };
+      message = JSON.parse(data.toString());
+      if (typeof message != "object") {
+        console.log("something is not working, I promise");
       }
+      if (message.type == "challenge") {
+        challenge(message.value);
+      } else if (message.type == "acceptChallenge")
+        acceptChallenge(message.value);
     });
   });
 
@@ -65,6 +82,14 @@ setInterval(() => {
     }
   });
 }, 10000);
+
+function challenge() {
+  console.log("Challenge");
+}
+
+function acceptChallenge() {
+  console.log("acceptedChallenge");
+}
 
 const apiRouter = express.Router();
 app.use("/api", apiRouter);

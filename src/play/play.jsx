@@ -164,17 +164,20 @@ export default function Play({
   }
 
   function startGameAgainstRandomPlayer() {
+    gameWebSocket.sendMessage({ type: "randomChallenge", value: {} });
     setGraySquares();
-    setGameStatus('gameAgainstBot');
-    setOpponentName('The Bot (:<');
+    setMessage(`Waiting for ${inputText} to respond...`);
+    setGameStatus('gameAgainstPlayer');
+    setOpponentName('random name');
   }
 
   function startGameAgainstPlayer() {
     setGraySquares();
-    gameWebSocket.sendMessage({ type: "challenge", value: { playerName: playerName } })
+    gameWebSocket.sendMessage({ type: "challenge", value: { challenged: inputText, challenger: username } });
     setMessage(`Waiting for ${inputText} to respond...`);
   }
   function acceptChallenge() {
+    gameWebSocket.sendMessage({ type: "acceptChallenge", value: { challenger: challengerName, challenged: username } });
     setChallengerName('');
     setOpponentName('');
     setGameStatus('gameAgainstPlayer');
