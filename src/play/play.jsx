@@ -3,9 +3,7 @@ import Button from "react-bootstrap/Button";
 import "./play.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js"; //I might change this later...
-import { WebSocket } from "vite";
-
-const WebSocketComponent =
+import { gameWebSocket } from "./gameWebSocket";
 
 export default function Play({
   gameStatus,
@@ -21,6 +19,7 @@ export default function Play({
   const [responseText, setResponseTest] = React.useState('Search Player');
   const [inputText, setInputText] = React.useState('');
   const [message, setMessage] = React.useState('');
+  const [challengerName, setChallengerName] = React.useState('')
 
   React.useEffect(() => {
     for (let i = 0; i < 5; i++) {
@@ -70,7 +69,17 @@ export default function Play({
                 Play against the bot (:&lt;
               </Button>
             </div>
-            <div className="col"></div>
+            <div className="col">
+              {challengerName !== '' && (
+                <Button
+                  type="submit"
+                  className="btn btn-primary m-2 button justify-content-center"
+                  onClick={acceptChallenge}
+                >
+                  Play against {challengerName}
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -149,32 +158,34 @@ export default function Play({
   }
 
   function startGameAgainstBot() {
-    let list = [];
-    for (let i in pngList) {
-      list.push("gray_square.png");
-    }
-    setPngList(list);
+    setGraySquares();
     setGameStatus('gameAgainstBot');
-    setOpponentName('The Bot (:<')
+    setOpponentName('The Bot (:<');
   }
 
   function startGameAgainstRandomPlayer() {
-    let list = [];
-    for (let i in pngList) {
-      list.push("gray_square.png");
-    }
-    setPngList(list);
+    setGraySquares();
     setGameStatus('gameAgainstBot');
+    setOpponentName('The Bot (:<');
   }
 
   function startGameAgainstPlayer() {
+    setGraySquares();
+    gameWebSocket.sendMessage({ type: "challenge", value: { playerName: playerName } })
+    setMessage(`Waiting for ${inputText} to respond...`);
+  }
+  function acceptChallenge() {
+    setChallengerName('');
+    setOpponentName('');
+    setGameStatus('gameAgainstPlayer');
+  }
+
+  function setGraySquares() {
     let list = [];
     for (let i in pngList) {
       list.push("gray_square.png");
     }
     setPngList(list);
-    setMessage(`Waiting for ${inputText} to respond...`);
-    ws
   }
 
   function Image({ png, alt }) {

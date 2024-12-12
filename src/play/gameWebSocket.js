@@ -37,7 +37,7 @@ class GameWebSocket {
     };
   }
 
-  broadcastEvent(from, type, value) {
+  sendMessage(type, value) {
     const event = new Message(type, value);
     this.socket.send(JSON.stringify(event));
   }
