@@ -8,10 +8,6 @@ export default function Chat({ username }) {
     const [currentText, setCurrentText] = React.useState('');
     const [messages, setMessages] = React.useState([]);
 
-    React.useEffect(() => {
-        chatWebSocket.getMessage = () => getMessage()
-    }, [])
-
     return (
         <main>
             <input
@@ -46,8 +42,8 @@ export default function Chat({ username }) {
         setCurrentText('');
     }
 
-    function getMessage(){
-        let newList = [...messages];
-        newList.push(<ChatMessage username={username} message={currentText} />);
-    }
+    // function getMessage(){
+    //     let newList = [...messages];
+    //     newList.push(<ChatMessage username={username} message={currentText} />);
+    // }
 }

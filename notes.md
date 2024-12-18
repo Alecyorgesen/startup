@@ -65,3 +65,25 @@ Is a web certificate is necessary to use HTTPS. yes
 Can a DNS A record can point to an IP address or another A record. to an ip address and not another a record.
 Port 443, 80, 22 is reserved for which protocol? unecrypted web traffic, https, secure shell (ssh)
 What will the following code using Promises output when executed?
+
+
+What is the default port for HTTP/HTTPS/SSH? 80/443/22
+What does an HTTP status code in the range of 300/400/500 indicate? An error
+What does the HTTP header content-type allow you to do? It specifies the data being sent, I usually use json
+What does a “Secure cookie”/”Http-only cookie”/”Same-site cookie” do? https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
+It helps to prevent cross site forgery attacks. People can try to steel information by requesting cookies meant for other websites.
+
+How should user passwords be stored? They should be encrypted! That way you can encrypt the password they send in later and compare the 2.
+
+It allows back and forth conversation between client and server. Various clients can communicate with each other through the server.
+What do the following acronyms stand for? JSX, JS, AWS, NPM, NVM
+Javascipt XML, Javascript, Amazon Web Services, Node Package Manager, Node Version Manager
+
+What does a React component with React.useState do? It creates a variable that when changed it updates the visuals in the app.
+What does the State Hook/Context Hook/Ref Hook/Effect Hook/Performance Hook do? https://react.dev/reference/react/hooks
+It passes it down as a prop. Useful when parents are distant. That's for context. Ref holds information that isn't used for rendering. Effect with rerun the code inside when certain things are updated depending on what you pass in as the second parameter. Careful about infinite loops! connect to and syncronize with external systems. UseMemo caches the result of an expensive calculation, and useCallback caches a function definition for passing it down to an optimized component.
+What does the package.json file do? configuration file for managing dependencies, scripts, project metadata. It has the version numbers it should use and such!
+What does the fetch function do? it makes http calls, specifically to apis
+What does node.js do? it runs a javascript file using the same interpreter chrome uses.
+What does pm2 do? It reruns applications that crash, and it also start things up when a system restarts.
+What does Vite do? It gives you a convenient React development environment.
